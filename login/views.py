@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
 # Create your views here.
-#views.py
 from login.forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
