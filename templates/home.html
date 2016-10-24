@@ -5,7 +5,6 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/home.css '%}"
 {% endblock %}
 {% block content %}
-    <h1> Bienvenido {{ user.username }} !!! </h1>
+    <h1> Welcome {{ user.username }} !!! </h1>
     <button type="button" onclick="window.location.href='/logout/' ">Logout</button>
-    <button type="button" onclick="window.location.href='/logout/' ">Editar perfil</button> 
 {% endblock %}
