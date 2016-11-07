@@ -1,0 +1,53 @@
+.black {
+
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+}
+.align-right{
+    text-align: right;
+}
+
+.image{
+    
+    align-self: center;
+    width: 80%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    
+}
+
+.arrow{
+    
+
+    height: 50px;
+    margin: 15px;
+
+}
+
+
+
+
+     
+
+#columnas{
+    
+    width: 33%;
+}
+
+#columnasfeed{
+    
+    left: 50%;
+    margin-left:25%;  
+    width: 50%;
+   
+   }
+.carga{
+
+    background-color: #7b1fa2 ;
+    text-align: center;
+    padding: 25px
+
+}
