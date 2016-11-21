@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Lumencap{% endblock %}
+{% block head %}Login{% endblock %}
+{% block content %}
+    {% if form.errors %}
+        <p>El ususario o la contraseña no coinciden. Por favor, intentalo de nuevo.</p>
+    {% endif %}
+
+    <form class="form" method="post" action="." >{% csrf_token %}
+        <input type="text" placeholder="Usuario" name="username">
+        <input type="password" placeholder="Contraseña" name="password">
+        <button type="submit"  value="Login" id="login-button">Login</button>
+        <button type="button" onclick="window.location.href='/register/' ">Registrarse</button>
+        <input type="hidden" name="next" value="/feed" />
+    </form>
+
+{% endblock %}
