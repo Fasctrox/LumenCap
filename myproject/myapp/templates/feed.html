@@ -1,0 +1,99 @@
+ <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Lumencap</title>
+        {% load staticfiles %}
+            
+            <script type="text/javascript" src="{% static 'javascript/jquery-3.1.0.js' %}"></script>
+
+            {% block footer %}
+                <link type="text/css" rel="stylesheet" href="{% static 'materialize/css/materialize.min.css' %}"  media="screen,projection"/>   
+                <script type="text/javascript" src="{% static 'materialize/js/materialize.js' %}"></script>
+                <script type="text/javascript" src="{% static 'javascript/init.js' %}"></script>
+                <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />              
+                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            {% endblock %}
+
+    </head>
+
+    <body>
+        <!-- List of uploaded documents -->
+
+    <ul id="dropdown1" class="dropdown-content">
+    <li><a href="/list/{{loggeduser}}">Mi Galeria </a></li>
+    <li><a href="logout/">Logout</a></li>
+    </ul>
+
+      <nav>
+
+   <div class="nav-wrapper white  row">
+
+      <a  href="/" class="brand-logo"><img style="height:60px;" src="{% static 'icons/logo.png' %}"></a>      
+      <ul id="nav-mobile" class="right hide-on-med-and-down">        
+        <li><a class="black-text" href="http://127.0.0.1:8000/feed/">feed</a></li>
+        <li><a class="dropdown-button black-text" href="#!" data-activates="dropdown1">{{loggeduser}} <i class="material-icons right">arrow_drop_down</i></a></li>
+      </ul>
+
+      <form autocomplete="off">
+        <div class="col l4 offset-l4 input-field grey-text card" style="height:40px; margin-top:12px" >
+          <input placeholder="Buscar usuarios" id="search" type="search" required>
+        </div>
+      </form>
+
+    </div>
+
+  </nav>  
+
+  <div class="row"><div class="searchresults"></div></div>
+
+
+        {% if documents %}
+
+
+            {% for document in documents %}
+            
+                <div class="col s12 l8 " id = "columnasfeed"  >
+
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <div>
+                                <a href="feed/view/{{document.fotografo.username}}/{{document.id}}">
+                                    <img src = "{{ document.docfile.url }}">
+                                </a>    
+                            </div>    
+                        </div>
+
+                        <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4" ><a  href="/list/{{document.fotografo.username}}">{{document.fotografo.username}}</a><i class="material-icons right">more_vert
+</i></span>
+                        </div>    
+                        <div class="card-reveal">
+
+                            <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
+                            
+                                <p>Modelo de camara : {{document.modelo}} <br>
+                                Apertura de diafragma : {{document.apertura}} <br>
+                                Tiempo de exposicion : {{document.tiempexp}} <br>   
+                                Distancia focal : {{document.dfocal}}mm <br>  
+                                ISO : {{document.iso}} <br>
+                                Editado con : {{document.edsoft}}<br>    
+                                </p>                            
+                        </div>
+                        
+                    </div>
+           </div>
+
+
+                {% endfor %}
+        </div>
+
+            {% else %}
+            <p>No hay imagenes para mostrar.</p>
+        {% endif %}
+
+
+
+    </body>
+
+</html>
