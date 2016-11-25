@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class DocumentForm(forms.Form):
     
     docfile = forms.FileField(
-        label='Subir una fotografia'
-    )
+        label = 'Subir una fotografia'
+        )
     
 

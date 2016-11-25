@@ -25,9 +25,9 @@
         <div   class = "col l8 black">
 
   
-            <a   href ="/myapp/{{mode}}/view/{{previmg.fotografo.username}}/{{previmg.id}}"><img class="arrow"  src="{% static 'icons/left-arrow.png' %}"></a>
+            <a   href ="/{{mode}}/view/{{previmg.fotografo.username}}/{{previmg.id}}"><img class="arrow"  src="{% static 'icons/left-arrow.png' %}"></a>
             <img class = "image" src="{{ image.docfile.url }}">
-            <a href="/myapp/{{mode}}/view/{{nextimg.fotografo.username}}/{{nextimg.id}}"><img class = "arrow"  src="{% static 'icons/right-arrow.png' %}"></a>
+            <a href="/{{mode}}/view/{{nextimg.fotografo.username}}/{{nextimg.id}}"><img class = "arrow"  src="{% static 'icons/right-arrow.png' %}"></a>
 
                 </div>
             
@@ -55,7 +55,7 @@
                             <p>{{comment.text}}</p>
                         </div "input-field">
                         {% endfor %}                        
-                        <form method="post" action="/myapp/savecomment/{{image.id}}/{{mode}}">
+                        <form method="post" action="/savecomment/{{image.id}}/{{mode}}">
                         {% csrf_token %}
                             <textarea class = "materialize-textarea" name="text" rows="4" cols="40" required></textarea><br/>
                             <button class="waves-effect waves-light btn fullwidth" type="submit" value="Comment!"/>Comentar</button>

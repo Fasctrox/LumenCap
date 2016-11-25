@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from myproject.myapp.models import Document , Comment
 from myproject.myapp.forms import DocumentForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.staticfiles.templatetags.staticfiles import static
 import datetime
 import exifread
+import json
 
 @login_required(login_url='/login/')
 def list(request , username):
@@ -62,6 +64,21 @@ def getUserByUrl(username):
 @login_required(login_url='/login/')
 def feed(request):
     # Handle file upload
+    if request.method == "GET" and request.is_ajax():
+        data = []
+        aux = {}
+        query = request.GET.get("q")
+        print(query)
+        users = User.objects.filter(username__contains=query)[:5]
+        for i in range(len(users)):
+            aux["name"] = users[i].username
+            aux["pk"] = users[i].pk
+            data.append(dict(aux))
+        print (data)
+        jsonify(data)
+        return HttpResponse(json.dumps(data),content_type="aplication/json")
+
+    users = User.objects.all()
     documentsall = Document.objects.all()
     loggeduser = request.user
     documents = []
@@ -74,7 +91,7 @@ def feed(request):
     return render(
         request,
         'feed.html',
-        {'documents': documents, 'loggeduser' : loggeduser}
+        {'documents': documents, 'loggeduser' : loggeduser, 'users' : users }
     )   
 def list_delete(request,question_id):
     print('question_id ->',question_id)
@@ -123,7 +140,7 @@ def save_comment(request , question_id , mode):
 
 
 
-    return HttpResponseRedirect( mode +'/view/' +  currentuser + '/' + question_id)
+    return HttpResponseRedirect('/' +  mode +'/view/' +  currentuser + '/' + question_id)
 
 
 def getIdNext(n, mode, username):
@@ -172,3 +189,10 @@ def unfollow(request, username):
     loggeduser.userprofile.follows.remove(currentuser.userprofile)
     return HttpResponseRedirect('/list/' + username)
 
+def jsonify(queryset):
+
+
+    with open( '/home/vmartini/Documentos/Lumencapvm-master/src/for_django_1-9/myproject/myproject/myapp/static/json/usernames.json', 'w') as outfile:
+        json.dump(queryset, outfile)
+
+    print(json.dumps(queryset, ensure_ascii=False), "Funcaism")

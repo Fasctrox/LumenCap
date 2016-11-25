@@ -4,15 +4,14 @@
         <meta charset="utf-8">
         <title>Lumencap</title>
         {% load staticfiles %}
-        
-            <!--Import materialize.css-->
-            <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />    
-            <link type="text/css" rel="stylesheet" href="{% static 'materialize/bin/materialize.css' %}"  media="screen,projection"/>    
-            <!--Import jQuery before materialize.js-->
+            
+            <script type="text/javascript" src="{% static 'javascript/jquery-3.1.0.js' %}"></script>
+
             {% block footer %}
-                <script type="text/javascript" src="{% static 'javascript/jquery-3.1.0.js' %}"></script>
-                <script type="text/javascript" src="{% static 'materialize/bin/materialize.js' %}"></script>
+                <link type="text/css" rel="stylesheet" href="{% static 'materialize/css/materialize.css' %}"  media="screen,projection"/>   
+                <script type="text/javascript" src="{% static 'materialize/js/materialize.js' %}"></script>
                 <script type="text/javascript" src="{% static 'javascript/init.js' %}"></script>
+                <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />              
                 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
             {% endblock %}
             
@@ -20,30 +19,42 @@
 
     <body>
         <!-- List of uploaded documents -->
-    <ul id="dropdown1" class="dropdown-content">
+      <ul id="dropdown1" class="dropdown-content">
     <li><a href="/list/{{loggeduser}}">Mi Galeria </a></li>
-    <li><a href="/logout/">Logout</a></li>
+    <li><a href="logout/">Logout</a></li>
     </ul>
-    <nav>
-    <div class="nav-wrapper white">
-      <a href="#" class="brand-logo  deep-purple-text ">Lumencap</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
 
-        <li><a class="grey-text" href="http://127.0.0.1:8000/feed/">feed</a></li>
-        <li><a class="dropdown-button black-text" href="#!" data-activates="dropdown1"> {{loggeduser}} <i class="material-icons right">arrow_drop_down</i></a></li>
+      <nav>
+
+   <div class="nav-wrapper white row">
+
+      <a  href="/" class="brand-logo"><img style="height:60px;" src="{% static 'icons/logo.png' %}"></a>      
+      <ul id="nav-mobile" class="right hide-on-med-and-down">        
+        <li><a class="black-text" href="http://127.0.0.1:8000/feed/">feed</a></li>
+        <li><a class="dropdown-button black-text" href="#!" data-activates="dropdown1">{{loggeduser}} <i class="material-icons right">arrow_drop_down</i></a></li>
       </ul>
+
+      <form autocomplete="off">
+        <div class="col l4 offset-l4 input-field grey-text card" style="height:40px; margin-top:12px" >
+          <input placeholder="Buscar usuarios" id="search" type="search" required>
+        </div>
+      </form>
+
     </div>
+
   </nav>  
+
+  <div class="row"><div class="searchresults"></div></div>
         {% if not editmode %}
             {% if not followed%}                 
                 <form action="follow/{{username}}" method="get" enctype="multipart/form-data">
                 {% csrf_token %}
-                <p><button class="waves-effect waves-light btn fullwidth white" type="submit" value="Seguir"><a class = "blue-text">Seguir</a></button></p>
+                <p><button class="waves-effect waves-light btn fllw white" type="submit" value="Seguir"><a class = "blue-text">Seguir</a></button></p>
                 </form>
             {% else %}
                 <form action="unfollow/{{username}}" method="get" enctype="multipart/form-data">
                 {% csrf_token %}
-                <p><button class="waves-effect waves-light btn fullwidth" type="submit" value="Unfollow">Dejar de Seguir</button></p>
+                <p><button class="waves-effect waves-light blue btn fllw fullwidth" type="submit" value="Unfollow">Dejar de Seguir</button></p>
                 </form>
             {% endif %}   
         {% endif %}
@@ -74,7 +85,7 @@
                             <form action="delete/{{document.id}}/" method="get" enctype="multipart/form-data">
                                 {% csrf_token %}
 
-                                <p><button class="waves-effect waves-light btn" type="submit" value="Eliminar">Eliminar</button></p>
+                                <p><button class="waves-effect waves-light blue btn" type="submit" value="Eliminar">Eliminar</button></p>
 
 
                             </form>
@@ -101,17 +112,22 @@
         {% if editmode %}
         <!-- Upload form. Note enctype attribute! -->
          <form action="/list/{{loggeduser}}" method="post" enctype="multipart/form-data">
+
             {% csrf_token %}
             <p>{{ form.non_field_errors }}</p>
 
-            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+            <p>{{ form.docfile.help_text }}</p>
 
             <p>
                 {{ form.docfile.errors }}
-                {{ form.docfile }}
+
             </p>
 
-            <p><input type="submit" value="Subir"/></p>
+             <div class="fileUpload waves-effect waves-light btn">
+                <span>Subir una imágen</span>   
+                {{form.docfile}}          
+            </div>
+
         </form>
         {% endif %}
     </body>
