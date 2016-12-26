@@ -28,7 +28,7 @@ class Document(models.Model):
     def makeinfo(self):
 
 
-        f = open('/home/vmartini/Documentos/Lumencapvm-master/src/for_django_1-9/myproject/' + self.docfile.url, 'rb')
+        f = open('/home/VMartini/LumenCap/myproject/' + self.docfile.url, 'rb')
         tags = exifread.process_file(f)
         a = []
         modelo = 'Desconocido'
